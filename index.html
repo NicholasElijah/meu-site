@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Vendas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Vendas</h1>
+        <form id="sales-form">
+            <label for="price">Preço do Produto (R$):</label>
+            <input type="number" id="price" name="price" step="0.01" required>
+
+            <label for="quantity">Quantidade:</label>
+            <input type="number" id="quantity" name="quantity" required>
+
+            <label for="discount">Desconto (%):</label>
+            <input type="number" id="discount" name="discount" step="0.01">
+
+            <button type="submit">Calcular</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('sales-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Captura os dados do formulário
+            const price = parseFloat(document.getElementById('price').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+
+            // Calcula o total sem desconto
+            const total = price * quantity;
+
+            // Calcula o valor do desconto
+            const discountAmount = (discount / 100) * total;
+
+            // Calcula o total a ser pago após o desconto
+            const totalAfterDiscount = total - discountAmount;
+
+            // Formata os valores para exibição
+            const formattedTotal = total.toFixed(2).replace('.', ',');
+            const formattedDiscountAmount = discountAmount.toFixed(2).replace('.', ',');
+            const formattedTotalAfterDiscount = totalAfterDiscount.toFixed(2).replace('.', ',');
+
+            // Exibe os resultados
+            document.getElementById('result').innerHTML = `
+                <p><strong>Total sem Desconto:</strong> R$ ${formattedTotal}</p>
+                <p><strong>Valor do Desconto:</strong> R$ ${formattedDiscountAmount}</p>
+                <p><strong>Total a Pagar:</strong> R$ ${formattedTotalAfterDiscount}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
+
